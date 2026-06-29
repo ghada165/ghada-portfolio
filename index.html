@@ -3,8 +3,28 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Ghada Nebli — Full Stack Developer</title>
+
+    <!-- ─── SEO & Open Graph ─── -->
+    <title>Ghada Nebli — Full Stack Developer & AI Engineer</title>
+    <meta name="description" content="Full Stack Developer & AI Specialist — building production-grade apps with Next.js, Spring Boot, FastAPI. AR e-commerce, AI trading, and real-time platforms." />
+    <meta name="keywords" content="Full Stack Developer, AI Engineer, Next.js, Spring Boot, FastAPI, AR, E-commerce, Portfolio" />
+    <meta name="author" content="Ghada Nebli" />
+
+    <!-- Open Graph (for LinkedIn, Twitter, Facebook) -->
+    <meta property="og:title" content="Ghada Nebli — Full Stack Developer & AI Engineer" />
+    <meta property="og:description" content="Building production-grade apps — AR e-commerce, AI trading platforms, real-time systems. Open to internships & collaborations." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://ghada165.github.io/ghada-portfolio/" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Ghada Nebli — Full Stack Developer & AI Engineer" />
+    <meta name="twitter:description" content="Building production-grade apps — AR e-commerce, AI trading platforms, real-time systems." />
+
+    <!-- ─── Favicon ─── -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👩‍💻</text></svg>" />
+    <link rel="apple-touch-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>👩‍💻</text></svg>" />
+
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
     <style>
         /* ── reset & base ── */
         *,
@@ -39,6 +59,18 @@
             font-size: 16px;
             line-height: 1.6;
             overflow-x: hidden;
+        }
+
+        /* ── scroll progress bar ── */
+        #progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 3px;
+            background: linear-gradient(90deg, var(--blue), var(--cyan));
+            width: 0%;
+            z-index: 999;
+            transition: width 0.1s ease-out;
         }
 
         /* ── nav ── */
@@ -283,7 +315,33 @@
             transform: translateY(-1px);
         }
 
-        /* ── hero note (new) ── */
+        /* ── Download CV button (new) ── */
+        .btn-cv {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.75rem;
+            background: transparent;
+            border: 1px solid var(--cyan);
+            color: var(--cyan);
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: background 0.2s, transform 0.2s;
+            font-family: 'Space Grotesk', sans-serif;
+        }
+
+        .btn-cv:hover {
+            background: rgba(0, 212, 255, 0.08);
+            transform: translateY(-1px);
+        }
+
+        .hero-ctas .btn-cv {
+            margin-left: 0;
+        }
+
+        /* ── hero note ── */
         .hero-note {
             margin-top: 1.5rem;
             max-width: 560px;
@@ -339,11 +397,12 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.5rem;
-            transition: border-color 0.2s;
+            transition: border-color 0.2s, transform 0.2s;
         }
 
         .skill-group:hover {
             border-color: var(--border-hover);
+            transform: translateY(-2px);
         }
 
         .skill-group-label {
@@ -370,12 +429,23 @@
             padding: 0.3rem 0.7rem;
             border-radius: 6px;
             font-family: 'JetBrains Mono', monospace;
+            transition: transform 0.2s, background 0.2s;
+            cursor: default;
+        }
+
+        .tag:hover {
+            transform: scale(1.05);
+            background: rgba(45, 126, 255, 0.2);
         }
 
         .tag.ai {
             background: rgba(0, 212, 255, 0.08);
             border-color: rgba(0, 212, 255, 0.2);
             color: #7EDDEE;
+        }
+
+        .tag.ai:hover {
+            background: rgba(0, 212, 255, 0.18);
         }
 
         /* ── projects ── */
@@ -593,6 +663,7 @@
             justify-content: center;
             gap: 1rem;
             margin-top: 2rem;
+            flex-wrap: wrap;
         }
 
         .social-link {
@@ -606,13 +677,14 @@
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: border-color 0.2s, color 0.2s;
+            transition: border-color 0.2s, color 0.2s, background 0.2s;
             font-family: 'Space Grotesk', sans-serif;
         }
 
         .social-link:hover {
             border-color: var(--border-hover);
             color: var(--text);
+            background: rgba(255, 255, 255, 0.03);
         }
 
         /* ── footer ── */
@@ -656,10 +728,17 @@
             .contact-card {
                 padding: 2rem 1.5rem;
             }
+            .hero-ctas .btn-cv {
+                width: 100%;
+                justify-content: center;
+            }
         }
     </style>
 </head>
 <body>
+
+    <!-- ─── SCROLL PROGRESS BAR ─── -->
+    <div id="progress-bar"></div>
 
     <!-- ─── NAV ─── -->
     <nav>
@@ -692,10 +771,10 @@
             </div>
 
             <p class="hero-desc">
-                2nd year engineering student building production-grade apps — from AR-powered e-commerce to AI trading platforms. I handle the full stack: design, backend, AI integration, and deployment.
+                Building production‑grade apps — from AR‑powered e‑commerce to AI trading platforms. I handle the full stack: design, backend, AI integration, and deployment.
             </p>
 
-            <!-- ── new CTAs ── -->
+            <!-- ── CTAs (now with Download CV) ── -->
             <div class="hero-ctas">
                 <a href="#contact" class="btn-primary">
                     Let's Work Together →
@@ -703,9 +782,12 @@
                 <a href="#contact" class="btn-outline">
                     Request Project Demo
                 </a>
+                <!-- ─── NEW: Download CV button ─── -->
+                <a href="#" class="btn-cv" id="downloadCvBtn">
+                    📄 Download CV
+                </a>
             </div>
 
-            <!-- ── new note ── -->
             <p class="hero-note">
                 Interested in my work? I'd be happy to share project demos, screenshots, and technical details during our conversation.
             </p>
@@ -929,6 +1011,14 @@
         }
         type();
 
+        // ── scroll progress bar ──
+        window.addEventListener('scroll', () => {
+            const scrollTop = window.scrollY;
+            const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+            const progress = (scrollTop / docHeight) * 100;
+            document.getElementById('progress-bar').style.width = progress + '%';
+        });
+
         // ── scroll reveal ──
         const observer = new IntersectionObserver(entries => {
             entries.forEach((e, i) => {
@@ -940,6 +1030,68 @@
         }, { threshold: 0.1 });
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // ── Download CV (generates a simple PDF-like download) ──
+        document.getElementById('downloadCvBtn').addEventListener('click', function(e) {
+            e.preventDefault();
+
+            // Create a simple text-based CV
+            const cvContent = `
+        ============================================================
+                        GHADA NEBLI — CV
+        ============================================================
+
+        📌 Full Stack Developer · AI Specialist
+        📧 ghadanebli76@gmail.com
+        🌐 ghadanebli76.com
+        🔗 linkedin.com/in/ghada-nebli-b42abb310
+
+        ------------------------------------------------------------
+        🎓 EDUCATION
+        ------------------------------------------------------------
+        2nd year Engineering Student
+        Specializing in Full Stack Development & Artificial Intelligence
+
+        ------------------------------------------------------------
+        💻 TECH STACK
+        ------------------------------------------------------------
+        Frontend:  Next.js, React, Tailwind CSS, TypeScript
+        Backend:   Spring Boot, FastAPI, Node.js, REST APIs
+        Database:  MySQL, PostgreSQL, MongoDB
+        AI / ML:   Python, scikit-learn, TensorFlow, AR / Computer Vision
+
+        ------------------------------------------------------------
+        🚀 PROJECTS
+        ------------------------------------------------------------
+        🔹 Canart.tn          — AR-powered e-commerce platform (Live)
+        🔹 TradeX             — AI trading platform with prediction engine
+        🔹 Matchy             — Dating app with swipe & real-time chat
+        🔹 LiveStream         — Live video streaming platform
+        🔹 Philotype          — Branding & marketing agency platform
+
+        ------------------------------------------------------------
+        📌 OPEN TO
+        ------------------------------------------------------------
+        ✔ Internships
+        ✔ Freelance projects
+        ✔ Collaborations
+
+        "Building production-grade apps — from AR to AI."
+
+        ============================================================
+        `;
+
+            // Create a Blob and download as .txt (or you can replace with a real PDF)
+            const blob = new Blob([cvContent], { type: 'text/plain;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'Ghada_Nebli_CV.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        });
     </script>
 
 </body>
