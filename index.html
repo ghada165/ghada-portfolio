@@ -315,7 +315,7 @@
             transform: translateY(-1px);
         }
 
-        /* ── Download CV button (new) ── */
+        /* ── Download CV button ── */
         .btn-cv {
             display: inline-flex;
             align-items: center;
@@ -774,7 +774,7 @@
                 Building production‑grade apps — from AR‑powered e‑commerce to AI trading platforms. I handle the full stack: design, backend, AI integration, and deployment.
             </p>
 
-            <!-- ── CTAs (now with Download CV) ── -->
+            <!-- ── CTAs ── -->
             <div class="hero-ctas">
                 <a href="#contact" class="btn-primary">
                     Let's Work Together →
@@ -782,8 +782,8 @@
                 <a href="#contact" class="btn-outline">
                     Request Project Demo
                 </a>
-                <!-- ─── NEW: Download CV button ─── -->
-                <a href="/CV_Ghada_Nebli_v4" target="_blank" class="btn-cv">
+                <!-- ✅ UPDATED: Link to the real PDF with download attribute -->
+                <a href="./CV_Ghada_Nebli_v4.pdf" download class="btn-cv">
                     📄 Download CV
                 </a>
             </div>
@@ -1031,68 +1031,8 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // ── Download CV (generates a simple PDF-like download) ──
-        document.getElementById('downloadCvBtn').addEventListener('click', function(e) {
-            e.preventDefault();
-
-            // Create a simple text-based CV
-            const cvContent = `
-        ============================================================
-                        GHADA NEBLI — CV
-        ============================================================
-
-        📌 Full Stack Developer · AI Specialist
-        📧 ghadanebli76@gmail.com
-        🌐 ghadanebli76.com
-        🔗 linkedin.com/in/ghada-nebli-b42abb310
-
-        ------------------------------------------------------------
-        🎓 EDUCATION
-        ------------------------------------------------------------
-        2nd year Engineering Student
-        Specializing in Full Stack Development & Artificial Intelligence
-
-        ------------------------------------------------------------
-        💻 TECH STACK
-        ------------------------------------------------------------
-        Frontend:  Next.js, React, Tailwind CSS, TypeScript
-        Backend:   Spring Boot, FastAPI, Node.js, REST APIs
-        Database:  MySQL, PostgreSQL, MongoDB
-        AI / ML:   Python, scikit-learn, TensorFlow, AR / Computer Vision
-
-        ------------------------------------------------------------
-        🚀 PROJECTS
-        ------------------------------------------------------------
-        🔹 Canart.tn          — AR-powered e-commerce platform (Live)
-        🔹 TradeX             — AI trading platform with prediction engine
-        🔹 Matchy             — Dating app with swipe & real-time chat
-        🔹 LiveStream         — Live video streaming platform
-        🔹 Philotype          — Branding & marketing agency platform
-
-        ------------------------------------------------------------
-        📌 OPEN TO
-        ------------------------------------------------------------
-        ✔ Internships
-        ✔ Freelance projects
-        ✔ Collaborations
-
-        "Building production-grade apps — from AR to AI."
-
-        ============================================================
-        `;
-
-            // Create a Blob and download as .txt (or you can replace with a real PDF)
-            const blob = new Blob([cvContent], { type: 'text/plain;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = 'Ghada_Nebli_CV.txt';
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-        });
+        // ❌ REMOVED: old download-CV JavaScript that generated a .txt file
+        // Now the button simply links to the real PDF.
     </script>
-
 </body>
 </html>
