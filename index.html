@@ -46,6 +46,7 @@
             --muted: #8B93A7;
             --border: rgba(255, 255, 255, 0.08);
             --border-hover: rgba(45, 126, 255, 0.4);
+            --shadow-glow: rgba(45, 126, 255, 0.15);
         }
 
         html {
@@ -71,6 +72,42 @@
             width: 0%;
             z-index: 999;
             transition: width 0.1s ease-out;
+        }
+
+        /* ── scroll to top button ── */
+        #scroll-top {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            font-size: 1.3rem;
+            cursor: pointer;
+            z-index: 999;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px) scale(0.8);
+            transition: opacity 0.3s ease, transform 0.3s ease, background 0.2s;
+            box-shadow: 0 4px 20px rgba(45, 126, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        #scroll-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0) scale(1);
+        }
+
+        #scroll-top:hover {
+            background: var(--cyan);
+            transform: translateY(-2px) scale(1.05);
+            box-shadow: 0 6px 30px rgba(0, 212, 255, 0.4);
         }
 
         /* ── nav ── */
@@ -113,10 +150,26 @@
             font-weight: 500;
             letter-spacing: 0.03em;
             transition: color 0.2s;
+            position: relative;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--blue), var(--cyan));
+            transition: width 0.3s ease;
         }
 
         .nav-links a:hover {
             color: var(--text);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
         /* ── hero ── */
@@ -202,6 +255,12 @@
             font-family: 'JetBrains Mono', monospace;
             font-size: 0.85rem;
             max-width: 540px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+            transition: border-color 0.3s;
+        }
+
+        .terminal:hover {
+            border-color: var(--border-hover);
         }
 
         .terminal-bar {
@@ -286,13 +345,15 @@
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: opacity 0.2s, transform 0.2s;
+            transition: all 0.25s ease;
             font-family: 'Space Grotesk', sans-serif;
+            box-shadow: 0 4px 15px rgba(45, 126, 255, 0.25);
         }
 
         .btn-primary:hover {
-            opacity: 0.9;
-            transform: translateY(-1px);
+            opacity: 1;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(45, 126, 255, 0.4);
         }
 
         .btn-outline {
@@ -306,13 +367,14 @@
             border-radius: 8px;
             font-weight: 500;
             font-size: 0.9rem;
-            transition: background 0.2s, transform 0.2s;
+            transition: all 0.25s ease;
             font-family: 'Space Grotesk', sans-serif;
         }
 
         .btn-outline:hover {
             background: rgba(45, 126, 255, 0.08);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            border-color: var(--blue);
         }
 
         /* ── Download CV button ── */
@@ -328,13 +390,14 @@
             border-radius: 8px;
             font-weight: 600;
             font-size: 0.9rem;
-            transition: background 0.2s, transform 0.2s;
+            transition: all 0.25s ease;
             font-family: 'Space Grotesk', sans-serif;
         }
 
         .btn-cv:hover {
             background: rgba(0, 212, 255, 0.08);
-            transform: translateY(-1px);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 20px rgba(0, 212, 255, 0.15);
         }
 
         .hero-ctas .btn-cv {
@@ -348,6 +411,10 @@
             color: var(--muted);
             font-size: 0.92rem;
             line-height: 1.7;
+            padding: 1rem 1.5rem;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 10px;
+            border: 1px solid var(--border);
         }
 
         /* ── sections ── */
@@ -397,12 +464,13 @@
             border: 1px solid var(--border);
             border-radius: 12px;
             padding: 1.5rem;
-            transition: border-color 0.2s, transform 0.2s;
+            transition: all 0.3s ease;
         }
 
         .skill-group:hover {
             border-color: var(--border-hover);
-            transform: translateY(-2px);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 30px rgba(45, 126, 255, 0.06);
         }
 
         .skill-group-label {
@@ -429,7 +497,7 @@
             padding: 0.3rem 0.7rem;
             border-radius: 6px;
             font-family: 'JetBrains Mono', monospace;
-            transition: transform 0.2s, background 0.2s;
+            transition: all 0.25s ease;
             cursor: default;
         }
 
@@ -462,7 +530,7 @@
             padding: 2rem;
             position: relative;
             overflow: hidden;
-            transition: border-color 0.25s, transform 0.25s, background 0.25s;
+            transition: all 0.3s ease;
             text-decoration: none;
             color: inherit;
             display: block;
@@ -477,13 +545,14 @@
             height: 2px;
             background: linear-gradient(90deg, var(--blue), var(--cyan));
             opacity: 0;
-            transition: opacity 0.25s;
+            transition: opacity 0.3s ease;
         }
 
         .project-card:hover {
             border-color: var(--border-hover);
-            transform: translateY(-4px);
+            transform: translateY(-6px);
             background: var(--card-hover);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.3);
         }
 
         .project-card:hover::before {
@@ -607,7 +676,7 @@
             right: 1.75rem;
             opacity: 0;
             color: var(--blue);
-            transition: opacity 0.2s;
+            transition: opacity 0.3s ease;
             font-size: 0.8rem;
         }
 
@@ -629,6 +698,11 @@
             margin: 0 auto;
             position: relative;
             overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .contact-card:hover {
+            border-color: var(--border-hover);
         }
 
         .contact-card::before {
@@ -677,7 +751,7 @@
             text-decoration: none;
             font-size: 0.85rem;
             font-weight: 500;
-            transition: border-color 0.2s, color 0.2s, background 0.2s;
+            transition: all 0.25s ease;
             font-family: 'Space Grotesk', sans-serif;
         }
 
@@ -685,6 +759,92 @@
             border-color: var(--border-hover);
             color: var(--text);
             background: rgba(255, 255, 255, 0.03);
+            transform: translateY(-2px);
+        }
+
+        /* ── contact form styles ── */
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.85rem;
+            color: var(--muted);
+            margin-bottom: 0.4rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            background: var(--navy-2);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text);
+            font-size: 0.95rem;
+            outline: none;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            border-color: var(--blue);
+            box-shadow: 0 0 0 3px rgba(45, 126, 255, 0.15);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .form-submit {
+            width: 100%;
+            padding: 0.8rem;
+            background: var(--blue);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.25s ease;
+            font-family: 'Space Grotesk', sans-serif;
+            box-shadow: 0 4px 15px rgba(45, 126, 255, 0.25);
+        }
+
+        .form-submit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(45, 126, 255, 0.4);
+        }
+
+        .form-submit:active {
+            transform: translateY(0);
+        }
+
+        #form-status {
+            margin-top: 1rem;
+            text-align: center;
+            font-size: 0.9rem;
+            display: none;
+        }
+
+        #form-status.success {
+            color: #5DE88A;
+        }
+
+        #form-status.error {
+            color: #FF5F57;
+        }
+
+        /* ── divider in contact ── */
+        .contact-divider {
+            margin-top: 2.5rem;
+            border-top: 1px solid var(--border);
+            padding-top: 2rem;
         }
 
         /* ── footer ── */
@@ -700,8 +860,8 @@
         /* ── scroll reveal ── */
         .reveal {
             opacity: 0;
-            transform: translateY(24px);
-            transition: opacity 0.6s ease, transform 0.6s ease;
+            transform: translateY(30px);
+            transition: opacity 0.7s ease, transform 0.7s ease;
         }
         .reveal.visible {
             opacity: 1;
@@ -732,6 +892,31 @@
                 width: 100%;
                 justify-content: center;
             }
+            .hero-ctas .btn-primary,
+            .hero-ctas .btn-outline {
+                width: 100%;
+                justify-content: center;
+            }
+            #scroll-top {
+                bottom: 1.5rem;
+                right: 1.5rem;
+                width: 44px;
+                height: 44px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .terminal {
+                font-size: 0.75rem;
+                padding: 1rem;
+            }
+            .project-card {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -739,6 +924,9 @@
 
     <!-- ─── SCROLL PROGRESS BAR ─── -->
     <div id="progress-bar"></div>
+
+    <!-- ─── SCROLL TO TOP ─── -->
+    <button id="scroll-top" aria-label="Scroll to top">↑</button>
 
     <!-- ─── NAV ─── -->
     <nav>
@@ -774,7 +962,6 @@
                 Building production‑grade apps — from AR‑powered e‑commerce to AI trading platforms. I handle the full stack: design, backend, AI integration, and deployment.
             </p>
 
-            <!-- ── CTAs ── -->
             <div class="hero-ctas">
                 <a href="#contact" class="btn-primary">
                     Let's Work Together →
@@ -782,14 +969,13 @@
                 <a href="#contact" class="btn-outline">
                     Request Project Demo
                 </a>
-                <!-- ✅ UPDATED: Link to the real PDF with download attribute -->
                 <a href="/ghada-portfolio/CV_Ghada_Nebli_v4.pdf" download class="btn-cv">
                     📄 Download CV
                 </a>
             </div>
 
             <p class="hero-note">
-                Interested in my work? I'd be happy to share project demos, screenshots, and technical details during our conversation.
+                💡 Interested in my work? I'd be happy to share project demos, screenshots, and technical details during our conversation.
             </p>
         </div>
     </section>
@@ -953,20 +1139,44 @@
             <div class="section-label" style="justify-content: center;">Contact</div>
             <h2 class="section-title">Let's work together</h2>
         </div>
+
         <div class="contact-card reveal">
-            <p style="color: var(--muted); font-size: 0.95rem; max-width: 380px; margin: 0 auto;">
+            <p style="color: var(--muted); font-size: 0.95rem; max-width: 380px; margin: 0 auto 2rem;">
                 Open to internships, freelance projects, and collaborations. I build fast and ship real products.
             </p>
-            <a href="mailto:ghadanebli76@gmail.com" class="contact-email">ghadanebli76@gmail.com</a>
-            <a href="https://ghadanebli76.com" target="_blank" style="display: block; color: var(--muted); font-size: 0.85rem; text-decoration: none; margin-bottom: 0.5rem; transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">🌐 ghadanebli76.com</a>
-            <div class="social-links">
-                <a href="https://www.linkedin.com/in/ghada-nebli-b42abb310/" target="_blank" class="social-link">
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
-                    LinkedIn
-                </a>
-                <a href="https://canart.tn" target="_blank" class="social-link">
-                    🛒 Canart.tn
-                </a>
+
+            <!-- ─── CONTACT FORM ─── -->
+            <form id="contact-form" action="https://formspree.io/f/mdardvvj" method="POST" style="max-width: 450px; margin: 0 auto;">
+                <div class="form-group">
+                    <label for="name">Your Name</label>
+                    <input type="text" id="name" name="name" required placeholder="e.g., Jane Doe" />
+                </div>
+                <div class="form-group">
+                    <label for="email">Your Email</label>
+                    <input type="email" id="email" name="email" required placeholder="jane@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="message">Message</label>
+                    <textarea id="message" name="message" required placeholder="Tell me about your project..."></textarea>
+                </div>
+                <button type="submit" class="form-submit">
+                    Send Message →
+                </button>
+                <div id="form-status"></div>
+            </form>
+
+            <div class="contact-divider">
+                <a href="mailto:ghadanebli76@gmail.com" class="contact-email" style="margin: 0;">ghadanebli76@gmail.com</a>
+                <a href="https://ghadanebli76.com" target="_blank" style="display: block; color: var(--muted); font-size: 0.85rem; text-decoration: none; margin: 0.5rem 0; transition: color 0.2s;" onmouseover="this.style.color='var(--text)'" onmouseout="this.style.color='var(--muted)'">🌐 ghadanebli76.com</a>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/ghada-nebli-b42abb310/" target="_blank" class="social-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"/><circle cx="4" cy="4" r="2"/></svg>
+                        LinkedIn
+                    </a>
+                    <a href="https://canart.tn" target="_blank" class="social-link">
+                        🛒 Canart.tn
+                    </a>
+                </div>
             </div>
         </div>
     </section>
@@ -1019,11 +1229,26 @@
             document.getElementById('progress-bar').style.width = progress + '%';
         });
 
+        // ── scroll to top button ──
+        const scrollBtn = document.getElementById('scroll-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 400) {
+                scrollBtn.classList.add('visible');
+            } else {
+                scrollBtn.classList.remove('visible');
+            }
+        });
+
+        scrollBtn.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
         // ── scroll reveal ──
         const observer = new IntersectionObserver(entries => {
             entries.forEach((e, i) => {
                 if (e.isIntersecting) {
-                    setTimeout(() => e.target.classList.add('visible'), i * 80);
+                    setTimeout(() => e.target.classList.add('visible'), i * 100);
                     observer.unobserve(e.target);
                 }
             });
@@ -1031,8 +1256,33 @@
 
         document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-        // ❌ REMOVED: old download-CV JavaScript that generated a .txt file
-        // Now the button simply links to the real PDF.
+        // ── contact form ──
+        const form = document.getElementById('contact-form');
+        const statusEl = document.getElementById('form-status');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            statusEl.style.display = 'block';
+            statusEl.textContent = '⏳ Sending...';
+            statusEl.className = '';
+
+            const data = new FormData(form);
+            const response = await fetch(form.action, {
+                method: 'POST',
+                body: data,
+                headers: { 'Accept': 'application/json' }
+            });
+
+            if (response.ok) {
+                statusEl.textContent = '✅ Message sent – I\'ll get back to you soon!';
+                statusEl.className = 'success';
+                form.reset();
+            } else {
+                statusEl.textContent = '❌ Oops – something went wrong. Please try again or email me directly.';
+                statusEl.className = 'error';
+            }
+        });
     </script>
+
 </body>
 </html>
